@@ -11,12 +11,12 @@ None.
 - gh_repo_name - the github repo e.g. `thtong/ansible-role-github-tag-release`
 - gh_repo_tag - the tag e.g `latest`
 - gh_repo_download_dir - the path to save the release asset e.g. `/tmp/`
-- gh_repo_downnlod_mode - options are `architecture`, `first`, `all` (default), `match`
+- gh_repo_download_mode - options are `architecture`, `first`, `all` (default), `match`
   - architecture will download assets with name that match target OS architecture e.g. amd64
   - first will download first asset listed
   - all will download all assets listed
   - match will download asset(s) that match the regex specified in `gh_repo_download_match_regex`
-- gh_repo_download_match_regex - the regex to use if `gh_repo_downnlod_mode` is set to match
+- gh_repo_download_match_regex - the regex to use if `gh_repo_download_mode` is set to match
 
 ## Dependencies
 
