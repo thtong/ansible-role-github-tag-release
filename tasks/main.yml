@@ -1,0 +1,30 @@
+---
+# tasks file for thtong.github-tag-release
+- name: "Get {{ gh_repo_name }} release details"
+  uri:
+    url: "https://api.github.com/repos/{{ gh_repo_name }}/releases/{{ (gh_repo_tag == 'latest') | ternary('latest', 'tags/' + gh_repo_tag) }}"
+    return_content: true
+  delegate_to: localhost
+  run_once: yes
+  register: gh_release
+
+- name: "Get {{ gh_repo_tag }} {{ gh_repo_name }} download details"
+  set_fact:
+    gh_download_info_all: "{{ gh_release.json.assets | selectattr('browser_download_url', 'match', '.*') }}"
+    gh_download_info_first: "{{ gh_release.json.assets | selectattr('browser_download_url', 'match', '.*') | first }}"
+    gh_download_info_architecture: "{{ gh_release.json.assets | selectattr('browser_download_url', 'match', '.*' + go_arch + '.*') }}"
+    gh_download_info_match: "{{ gh_release.json.assets | selectattr('browser_download_url', 'match', gh_repo_download_match_regex) }}"
+  when:
+    - gh_release is succeeded
+
+- name: "Download {{ gh_repo_tag }} {{ gh_repo_name }} assets"
+  get_url:
+    url: "{{ item.browser_download_url }}"
+    dest: "{{ gh_repo_download_dir }}"
+    timeout: 300
+  retries: 3
+  delay: 2
+  register: gh_download
+  loop: "{{ lookup('vars', 'gh_download_info_' + gh_repo_download_mode) }}"
+  when:
+    - lookup('vars', 'gh_download_info_' + gh_repo_download_mode) is defined

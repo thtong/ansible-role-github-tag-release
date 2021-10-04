@@ -1,0 +1,13 @@
+---
+# defaults file for thtong.github-tag-release
+gh_repo_name: thtong/ansible-role-github-tag-release
+gh_repo_tag: latest
+gh_repo_download_dir: /tmp/
+gh_repo_download_mode: all
+# options are:
+# architecture - assets with name that match OS architecture e.g. amd64
+# first - first one listed
+# all - everything listed
+# match - regex for name e.g. *.tar.gz
+# if type is match, then regex below will be used
+gh_repo_download_match_regex: ".*\\.tar\\.gz"

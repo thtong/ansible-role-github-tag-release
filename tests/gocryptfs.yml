@@ -1,0 +1,4 @@
+---
+- hosts: localhost
+  roles:
+    - { role: thtong.github-tag-release, gh_repo_name: rfjakob/gocryptfs }

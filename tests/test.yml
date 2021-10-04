@@ -1,0 +1,4 @@
+---
+- hosts: localhost
+  roles:
+    - thtong.github-tag-release
